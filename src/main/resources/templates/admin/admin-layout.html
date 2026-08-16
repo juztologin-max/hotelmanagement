@@ -5,6 +5,10 @@
       th:fragment="layout(user_type,user_name)">
       <head>
         <title>Admin Layout</title>
+        <meta charset="utf-8">
+        <meta name="csrf_header" th:content="${_csrf.headerName}">
+        <meta name="csrf" th:content="${_csrf.token}">
+        
       </head>
       
       <body>
@@ -12,6 +16,7 @@
             <form id="hidden-logout-form-id" th:action="@{/logout}" method="post" style="display: none;"></form>
                         
             <a href="/frontpage">Home</a>
+            <a href="/admin/rooms">Rooms</a>
             <a href="#" onclick="document.getElementById('hidden-logout-form-id').submit(); return false;">Logout</a>
           
         </header>

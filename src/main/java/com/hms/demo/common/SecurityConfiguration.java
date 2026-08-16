@@ -14,6 +14,7 @@ public class SecurityConfiguration {
 		http.authorizeHttpRequests(auth ->
 		       auth.requestMatchers("/login","/logout").permitAll()
 		       .requestMatchers("/frontpage").authenticated()
+		       .requestMatchers("/api/**").authenticated()
 		       .requestMatchers("/admin/**").hasRole("ADMIN")    
 		       .anyRequest().denyAll())
 		    .formLogin(form ->

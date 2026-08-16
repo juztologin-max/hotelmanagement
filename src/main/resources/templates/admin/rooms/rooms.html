@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/admin-layout(user_type='ADMIN')}">
+         <head>
+            <title>Rooms</title>
+         </head> 
+         <body>  
+            <section layout:fragment="content">
+               <form th:action="@{/api/rooms}" method="post" th:object="${roomObject}">
+                  <label for="room-tier-id">Room Tier</label>
+                  <select id="room-tier-id" th:field="*{tier}">
+                    <option th:each="tier :${roomTier}"
+                            th:text="${tier}"
+                            th:value="${tier}">
+                    </option>
+                  </select><br>
+                  <label for="room-capacity-id">Room Capacity</label>
+                  <select id="room-capacity-id" th:field="*{capacity}">
+                    <option th:each="capacity :${roomCapacity}"
+                            th:text="${capacity}"
+                            th:value="${capacity}">
+                    </option>
+                  </select><br>
+                  <label for="room-state-id">Room State</label>
+                  <select id="room-state-id" th:field="*{state}">
+                    <option th:each="state :${roomState}"
+                            th:text="${state}"
+                            th:value="${state}">
+                    </option>
+                  </select><br>
+                  <input type="submit" value="Submit">
+               </form>
+            </section>
+         </body>     
+</html>
