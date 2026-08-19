@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--https://ultraq.github.io/thymeleaf-layout-dialect/-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:fragment="layout(user_type,user_name)">
+      <head>
+        <title>Admin Layout</title>
+        <meta charset="utf-8">
+        <meta name="csrf_header" th:content="${_csrf.headerName}">
+        <meta name="csrf" th:content="${_csrf.token}">
+        
+      </head>
+      
+      <body>
+        <header>
+            <form id="hidden-logout-form-id" th:action="@{/logout}" method="post" style="display: none;"></form>
+                        
+            <a href="/frontpage">Home</a>
+            <a href="/staff/booking">Bookings</a>
+            <a href="#" onclick="document.getElementById('hidden-logout-form-id').submit(); return false;">Logout</a>
+          
+        </header>
+        <section>
+            <h4>Welcome [[${user_type}]]</h4>
+        </section>
+        <section layout:fragment="content">
+            <p>Content from </p>
+        </section>
+        
+        <footer>
+            <h1>Footer</h1>
+        </footer>
+      </body>	
+</html>

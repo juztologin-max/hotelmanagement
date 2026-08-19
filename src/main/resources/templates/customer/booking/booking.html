@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{customer/customer-layout(user_type='CUSTOMER')}">
+         <head>
+            <title>Bookings</title>
+         </head> 
+         <body>  
+            <section layout:fragment="content">
+               <form th:action="@{/customer/booking}" method="post" th:object="${bookingObject}">
+                  <!--<input type="hidden" th:field="*{id}"> -->
+                  <label for="room-tier-id">Room Tier</label>
+                  <select id="room-tier-id" th:field="*{room.tier}">
+                    <option th:each="tier :${roomTier}"
+                            th:text="${tier}"
+                            th:value="${tier}">
+                    </option>
+                  </select><br>
+                  <label for="room-capacity-id">Room Capacity</label>
+                  <select id="room-capacity-id" th:field="*{room.capacity}">
+                    <option th:each="capacity :${roomCapacity}"
+                            th:text="${capacity}"
+                            th:value="${capacity}">
+                    </option>
+                  </select><br>
+                  <label for="room-state-id">Room State</label>
+                  <select id="room-state-id" th:field="*{room.state}">
+                    <option th:each="state :${roomState}"
+                            th:text="${state}"
+                            th:value="${state}">
+                    </option>
+                  </select><br>
+                  <label for="occupancy-start-id">From</label>
+                  <input id="occupancy-start-id" type="datetime-local" th:field="*{occupancyStart}"><br>
+                  <label for="occupancy-end-id">To</label>
+                  <input id="occupancy-end-id" type="datetime-local" th:field="*{occupancyEnd}"><br>                                    
+                  <input type="submit" value="Submit">
+               </form>
+               <br>
+            
+               <div th:if="${currentBookings != null and not currentBookings.isEmpty()}">
+                <label for="table-current-booking-id">Current Bookings</label>
+                <table id="table-current-booking-id">
+                  <thead>
+                     <tr>
+                       <th>SL No.</th>
+                       <th>ROOM NO</th>
+                       <th>TYPE</th>
+                       <th>CAPACITY</th>
+                       <th>FROM</th>
+                       <th>TO</th>
+                     </tr>                    
+                  </thead>
+                  <tbody>
+                     <tr th:each="currentBooking, iterStat : ${currentBookings}">
+                       <td th:text="${iterStat.count}"></td>
+                       <td th:text="${currentBooking.room.id}"></td>
+                       <td th:text="${currentBooking.room.tier}"></td>
+                       <td th:text="${currentBooking.room.capacity}"></td>
+                       <td th:text="${#temporals.format(currentBooking.occupancyStart,'dd MMM yyyy hh:mm a')}"></td>
+                       <td th:text="${#temporals.format(currentBooking.occupancyEnd,'dd MMM yyyy hh:mm a')}"></td>
+                     </tr>
+                  </tbody>
+                </table>
+               </div>
+               <div th:if="${currentBookings == null or currentBookings.isEmpty()}">
+                    <span>No Current Bookings</span>
+               </div>
+ 
+         
+               <div th:if="${pastBookings != null and not pastBookings.isEmpty()}">   
+                <label for="table-past-booking-id">Past Bookings</label>
+                <table id="table-past-booking-id" >
+                  <thead>
+                     <tr>
+                       <th>SL No.</th>
+                       <th>ROOM NO</th>
+                       <th>TYPE</th>
+                       <th>CAPACITY</th>
+                       <th>FROM</th>
+                       <th>TO</th>
+                     </tr>                    
+                  </thead>
+                  <tbody>
+                     <tr th:each="pastBooking, iterStat : ${pastBookings}">
+                       <td th:text="${iterStat.count}"></td>
+                       <td th:text="${pastBooking.room.id}"></td>
+                       <td th:text="${pastBooking.room.tier}"></td>
+                       <td th:text="${pastBooking.room.capacity}"></td>
+                       <td th:text="${#temporals.format(pastBooking.occupancyStart,'dd MMM yyyy hh:mm a')}"></td>
+                       <td th:text="${#temporals.format(pastBooking.occupancyEnd,'dd MMM yyyy hh:mm a')}"></td>
+                     </tr>
+                  </tbody>
+                </table>
+               </div>
+               <div th:if="${pastBookings == null or pastBookings.isEmpty()}">
+                    <span>No Past Bookings</span>
+               </div>
+           </section>
+         </body>     
+</html>

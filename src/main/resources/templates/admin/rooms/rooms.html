@@ -7,7 +7,8 @@
          </head> 
          <body>  
             <section layout:fragment="content">
-               <form th:action="@{/api/rooms}" method="post" th:object="${roomObject}">
+               <form th:action="@{/admin/rooms}" method="post" th:object="${roomObject}">
+                  <input type="hidden" th:field="*{id}">
                   <label for="room-tier-id">Room Tier</label>
                   <select id="room-tier-id" th:field="*{tier}">
                     <option th:each="tier :${roomTier}"
@@ -31,6 +32,36 @@
                   </select><br>
                   <input type="submit" value="Submit">
                </form>
+               <br>
+            
+               <table id="table-id">
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>ROOM NO</th>
+                        <th>TYPE</th>
+                        <th>CAPACITY</th>
+                        <th>STATE</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                    </tr>                    
+                </thead>
+                <tbody>
+                    <tr th:each="room, iterStat : ${rooms}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${room.id}"></td>
+                        <td th:text="${room.tier}"></td>
+                        <td th:text="${room.capacity}"></td>
+                        <td th:text="${room.state}"></td>
+                        <td>
+                            <a th:href="@{/admin/rooms/{id}(id=${room.id})}">Edit</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/rooms/delete/{id}(id=${room.id})}">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+               </table>
             </section>
          </body>     
 </html>

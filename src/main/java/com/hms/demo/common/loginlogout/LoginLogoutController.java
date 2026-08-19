@@ -10,22 +10,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginLogoutController {
-	@GetMapping("/login")
-	String getLoginHandler() {
-		return "login";
-	}
+    @GetMapping("/login")
+    String getLoginHandler() {
+        return "login";
+    }
 
-	@GetMapping("/frontpage")
-	String getFrontPageHandler(@AuthenticationPrincipal LoginUser pri) throws Exception {
-		List<String> auths = pri.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
-		if (auths.contains(UserRolesEnum.ROLE_ADMIN.name())) {
-			return "admin/frontpage";
-		}
+    @GetMapping("/frontpage")
+    String getFrontPageHandler(@AuthenticationPrincipal LoginUser pri) throws Exception {
+        List<String> auths = pri.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+        if (auths.contains(UserRolesEnum.ROLE_ADMIN.name())) {
+            return "admin/frontpage";
+        }
 
-		throw new AccessDeniedException(getLoginHandler());
+        else if (auths.contains(UserRolesEnum.ROLE_CUSTOMER.name())) {
+            return "customer/frontpage";
+        } else if (auths.contains(UserRolesEnum.ROLE_STAFF.name())) {
+            return "staff/frontpage";
+        }
 
-	}
-	
-	
+        throw new AccessDeniedException(getLoginHandler());
+
+    }
 
 }
